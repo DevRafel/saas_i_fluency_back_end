@@ -21,10 +21,14 @@ def valida_link(request):
 
        if form.is_valid():
               try:
-                     form.save()
+                     link_obj = form.save(commit=False)
+                     link_obj.visualizacoes = 0
+                     link_obj.save()
                      return HttpResponse(f"Seu link foi criado e é: http://127.0.0.1:8000/{link_encurtado}" )
               except:
                      return HttpResponse("erro do sistema")
+              
+       return HttpResponse(f"Erro na criação do link: /{link_encurtado}")
               
 
 def redirecionar(request, link):
