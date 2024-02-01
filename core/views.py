@@ -32,4 +32,8 @@ def redirecionar(request, link):
        if len(links) == 0:
               return redirect('/')
        
-       return redirect(links[0].link_redirecionado)
+       link_obj = links[0]
+       link_obj.visualizacoes += 1
+       link_obj.save()
+       
+       return redirect(link_obj.link_redirecionado)
