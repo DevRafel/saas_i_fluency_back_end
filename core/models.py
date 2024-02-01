@@ -8,3 +8,4 @@ class Links(models.Model):
        def __str__(self) -> str:
               return self.link_encurtado
 
+# Foi passa do dia todo tentado fazer um contador de clicks para saber quantas pessoas assesou o link mais não consegui essa merda fica dando erro toda hora merda
