@@ -23,6 +23,11 @@ def valida_link(request):
               try:
                      link_obj = form.save(commit=False)
                      link_obj.visualizacoes = 0
+                     
+                     
+                     origem = request.GET.get('origem', 'desconhecida')
+                     link_obj.origem = origem
+                     
                      link_obj.save()
                      return HttpResponse(f"Seu link foi criado e é: http://127.0.0.1:8000/{link_encurtado}" )
               except:
