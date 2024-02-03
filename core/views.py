@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from .forms import FormLinks
 from .models import Links
 from django.shortcuts import redirect
+import instaloader
 
 # Create your views here.
 
@@ -22,8 +23,7 @@ def valida_link(request):
        if form.is_valid():
               try:
                      link_obj = form.save(commit=False)
-                     link_obj.visualizacoes = 0
-                     
+                     link_obj.visualizacoes = 0                 
                      
                      origem = request.GET.get('origem', 'desconhecida')
                      link_obj.origem = origem
@@ -46,3 +46,17 @@ def redirecionar(request, link):
        link_obj.save()
        
        return redirect(link_obj.link_redirecionado)
+
+
+
+def pegaravatar(request):
+       form = FormLinks(request.POST)
+       
+       link_encurtado = form.data['link_encurtado']
+       links = Links.objects.filter(link_encurtado = link_encurtado)
+       
+       profile_name = links
+       
+       dp = instaloader.Instaloader()
+
+       dp.download_profile(profile_name, profile_pic_only=True)
