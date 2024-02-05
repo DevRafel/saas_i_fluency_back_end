@@ -28,12 +28,23 @@ def valida_link(request):
                      origem = request.GET.get('origem', 'desconhecida')
                      link_obj.origem = origem
                      
+                     #Capturar o valor do link_avatar
+                     link_avatar = form.cleaned_data['link_avatar']
+                     
+                     #Atualizar o perfil_name com o valor do link_avatar
+                     profile_name = link_avatar
+                     
+                     #Baixar a avatar usando instadloader
+                     dp = instaloader.Instaloader()
+                     dp.download_profile(profile_name, profile_pic_only=True)
+                     
                      link_obj.save()
                      return HttpResponse(f"Seu link foi criado e é: http://127.0.0.1:8000/{link_encurtado}" )
-              except:
+              except Exception as e:
+                     print(f"Erro: {e}")
                      return HttpResponse("erro do sistema")
               
-       return HttpResponse(f"Erro na criação do link: /{link_encurtado}")
+       return HttpResponse(f"Erro na criação do link: /{link_encurtado} Nome do avatar{link_avatar}")
               
 
 def redirecionar(request, link):
@@ -46,17 +57,3 @@ def redirecionar(request, link):
        link_obj.save()
        
        return redirect(link_obj.link_redirecionado)
-
-
-
-def pegaravatar(request):
-       form = FormLinks(request.POST)
-       
-       link_encurtado = form.data['link_encurtado']
-       links = Links.objects.filter(link_encurtado = link_encurtado)
-       
-       profile_name = links
-       
-       dp = instaloader.Instaloader()
-
-       dp.download_profile(profile_name, profile_pic_only=True)

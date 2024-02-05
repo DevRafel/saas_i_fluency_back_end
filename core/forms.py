@@ -5,4 +5,4 @@ class FormLinks(forms.ModelForm):
        
        class Meta:
               model = Links
-              fields = ['link_redirecionado', 'link_encurtado'] 
+              fields = ['link_redirecionado', 'link_encurtado', 'link_avatar'] 
