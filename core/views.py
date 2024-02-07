@@ -1,10 +1,12 @@
 from django.shortcuts import render
+import os
 from django.http import HttpResponse
 from .forms import FormLinks
 from .models import Links
 from django.shortcuts import redirect
 import instaloader
 from instaloader.exceptions import ProfileNotExistsException
+import shutil
 
 # Create your views here.
 
@@ -48,17 +50,22 @@ def valida_link(request):
                      profile_name = link_avatar
                      
                      
+                     
                      #Baixar a avatar usando instadloader
-                     dp = instaloader.Instaloader()
+                     ''' dp = instaloader.Instaloader()
                      try:
-                        dp.download_profile(profile_name, profile_pic_only=True)    
+                        dp.download_profile(profile_name, profile_pic_only=True)
                      except ProfileNotExistsException:
                             print(f"Erro ao baixar avatar: {e}")
                             profile_name = link_avatar_default
                             dp.download_profile(profile_name, profile_pic_only=True)
+                            '''
+                            
+                     
+                                 
                             
                      link_obj.save()
-                     return HttpResponse(f"Seu link foi criado e é: http://127.0.0.1:8000/{link_encurtado}  || Link do avatar : {link_avatar} ||" )
+                     return HttpResponse(f"Seu link foi criado e é: http://127.0.0.1:8000/{link_encurtado}  || Link do avatar : {link_avatar} || " )
               except Exception as e:
                      print(f"Erro: {e}")
                      return HttpResponse("erro do sistema")
